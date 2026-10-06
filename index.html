@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <input id="a" type="number" placeholder="First number" />
+    <input id="b" type="number" placeholder="Second number" />
+    <br><br>
+    <button id="add-btn">Add</button>
+    <button id="substract-btn">Subtract</button>
+    <button id="multiply-btn">Multiply</button>
+    <button id="devide-btn">Divide</button>
+    <p>Result: <span id="result"></span></p>
+
+    <script>
+        async function calculate(op) {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const res = await fetch(`/${op}/${a}/${b}`);
+            const data = await res.json();
+            document.getElementById('result').textContent = data.error ?? data.result;
+        }
+
+        document.getElementById('add-btn').addEventListener('click', () => calculate('add'));
+        document.getElementById('substract-btn').addEventListener('click', () => calculate('substract'));
+        document.getElementById('multiply-btn').addEventListener('click', () => calculate('multiply'));
+        document.getElementById('devide-btn').addEventListener('click', () => calculate('devide'));
+    </script>
+</body>
+</html>
